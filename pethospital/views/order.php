@@ -26,7 +26,7 @@
         </thead>
         <tbody>
             <?php foreach ($allOrders as $row): ?>
-                <a href="controller=main&action=main/orderItems">
+                <a href="?controller=main&action=main/orderItems/<?= htmlspecialchars($row['id']) ?>">
                     <tr>
                         <td><?= htmlspecialchars($row['id']) ?></td>
                         <td><?= htmlspecialchars($row['hospital']) ?></td>

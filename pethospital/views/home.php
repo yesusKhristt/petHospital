@@ -3,19 +3,19 @@
         <title>Home</title>
     </head>
     <body>
-        <a class="btn1" href="controller=main&action=main/hospitals">
+        <a class="btn1" href="?controller=main&action=main/hospitals">
             Hospitals
         </a>
-        <a class="btn1" href="controller=main&action=main/hmployees">
+        <a class="btn1" href="?controller=main&action=main/employees">
             Employees
         </a>
-        <a class="btn1" href="controller=main&action=main/items">
+        <a class="btn1" href="?controller=main&action=main/items">
             Items
         </a>
-        <a class="btn1" href="controller=main&action=main/recievers">
+        <a class="btn1" href="?controller=main&action=main/recievers">
             Recievers
         </a>
-        <a class="btn1" href="controller=main&action=main/orders">
+        <a class="btn1" href="?controller=main&action=main/orders">
             Orders
         </a>
     </body>

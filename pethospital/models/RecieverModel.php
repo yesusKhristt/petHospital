@@ -32,6 +32,6 @@ class RecieverModel
         public function getAllRecievers()
     {
         $sql1 = "SELECT * FROM recievers";
-        return $this->pdo->exec($sql1);
+        return $this->pdo->query($sql1)->fetchAll(PDO::FETCH_ASSOC);
     }
 }

@@ -32,6 +32,6 @@ class ItemModel
         public function getAllItems()
     {
         $sql1 = "SELECT * FROM items";
-        return $this->pdo->exec($sql1);
+        return $this->pdo->query($sql1)->fetchAll(PDO::FETCH_ASSOC);
     }
 }

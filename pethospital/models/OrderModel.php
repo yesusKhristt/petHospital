@@ -33,14 +33,13 @@ class OrderModel
             order_id INT NOT NULL,
             item_id INT NOT NULL,
             quantity INT NOT NULL,
-            unit_price INT NOT NULL,
             PRIMARY KEY (order_id, item_id),
             FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
             FOREIGN KEY (item_id) REFERENCES items(id) ON DELETE CASCADE
         );
         ";
 
-                try {
+        try {
             $this->pdo->exec($sql1);
             $this->pdo->exec($sql2);
 
@@ -49,9 +48,18 @@ class OrderModel
         }
     }
 
-        public function getAllOrders()
+    public function getAllOrders()
     {
         $sql1 = "SELECT * FROM orders";
-        return $this->pdo->exec($sql1);
+        return $this->pdo->query($sql1)->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getOrderItems($orderId){
+        $stmt = $this->pdo->prepare("SELECT * FROM ordersitems WHERE order_id = ?");
+        $stmt->execute([$orderId]);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
     }
 }

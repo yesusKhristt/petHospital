@@ -20,7 +20,7 @@ class HospitalModel
         );
         ";
 
-                try {
+        try {
             $this->pdo->exec($sql1);
 
         } catch (PDOException $e) {
@@ -28,9 +28,10 @@ class HospitalModel
         }
     }
 
-        public function getAllHospitals()
+    public function getAllHospitals()
     {
         $sql1 = "SELECT * FROM hospitals";
-        return $this->pdo->exec($sql1);
+        return $this->pdo->query($sql1)->fetchAll(PDO::FETCH_ASSOC);
+
     }
 }

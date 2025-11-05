@@ -30,20 +30,23 @@ class MainController
             case 'home':
                 require_once __DIR__ . '/../views/home.php';
                 break;
-            case 'Hospitals':
+            case 'hospitals':
                 $this->hospitals($parts);
                 break;
-            case 'Employees':
+            case 'employees':
                 $this->employees($parts);
                 break;
-            case 'Items':
+            case 'items':
                 $this->items($parts);
                 break;
-            case 'Recievers':
+            case 'recievers':
                 $this->recievers($parts);
                 break;
-            case 'Orders':
+            case 'orders':
                 $this->orders($parts);
+                break;
+            case 'orderItems':
+                $this->orderItems($parts);
                 break;
         }
     }
@@ -54,7 +57,7 @@ class MainController
     }
 
     public function employees($parts){
-        $allEmplyees = $this->employee->getAllEmployees();
+        $allEmployees = $this->employee->getAllEmployees();
         require_once __DIR__ . '/../views/employee.php';
     }
 
@@ -72,6 +75,12 @@ class MainController
     public function orders($parts){
         $allOrders = $this->order->getAllOrders();
         require_once __DIR__ . '/../views/order.php';
+    }
+
+    public function orderItems($parts){
+        $orderId = $parts[2];
+        $allOrders = $this->order->getOrderItems($orderId);
+        require_once __DIR__ . '/../views/orderItems.php';
     }
 
     public function employeeForm($user_id)

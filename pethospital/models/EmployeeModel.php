@@ -30,6 +30,6 @@ class EmployeeModel
     public function getAllEmployees()
     {
         $sql1 = "SELECT * FROM employees";
-        return $this->pdo->exec($sql1);
+        return $this->pdo->query($sql1)->fetchAll(PDO::FETCH_ASSOC);
     }
 }

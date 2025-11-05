@@ -29,6 +29,6 @@ class CategoryModel
     public function getAllCategories()
     {
         $sql1 = "SELECT * FROM categories";
-        return $this->pdo->exec($sql1);
+        return $this->pdo->query($sql1)->fetchAll(PDO::FETCH_ASSOC);
     }
 }

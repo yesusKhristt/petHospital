@@ -52,7 +52,7 @@ class VendorModel
             $shopname,
             $phone,
             $address
-        ]);
+        ])->fetchAll();
 
     }
 }
