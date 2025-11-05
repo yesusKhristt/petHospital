@@ -31,7 +31,14 @@ class RecieverModel
 
         public function getAllRecievers()
     {
-        $sql1 = "SELECT * FROM recievers";
+        $sql1 = "SELECT recievers.id, recievers.name AS reciever_name, hospitals.name AS hospital_name, recievers.contact_info FROM recievers JOIN hospitals ON recievers.hospital_id = hospitals.id";
         return $this->pdo->query($sql1)->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getReciever($id){
+        $stmt = $this->pdo->prepare("SELECT recievers.id, recievers.name AS reciever_name, hospitals.name AS hospital_name, hospitals.id AS hospital_id, recievers.contact_info FROM recievers JOIN hospitals ON recievers.hospital_id = hospitals.id WHERE recievers.id = ?");
+        $stmt->execute([$id]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 }

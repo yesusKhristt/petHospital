@@ -18,7 +18,7 @@ class OrderModel
             employee_id INT NOT NULL,
             reciever_id INT NOT NULL,
             order_date TIMESTAMP NOT NULL,
-            status VARCHAR(20) NOT NULL,
+            order_status VARCHAR(20) NOT NULL,
             total_amount INT NOT NULL,
             payment_method VARCHAR(30) NOT NULL,
             payment_status VARCHAR(20) NOT NULL,
@@ -29,7 +29,7 @@ class OrderModel
         ";
 
         $sql2 = "
-        CREATE TABLE IF NOT EXISTS ordersItems (
+        CREATE TABLE IF NOT EXISTS orderItems (
             order_id INT NOT NULL,
             item_id INT NOT NULL,
             quantity INT NOT NULL,
@@ -50,16 +50,52 @@ class OrderModel
 
     public function getAllOrders()
     {
-        $sql1 = "SELECT * FROM orders";
+        $sql1 = "SELECT orders.id, hospitals.name AS hospital_name, employees.name AS employee_name, recievers.name AS reciever_name, orders.order_date ,orders.order_status ,orders.total_amount ,orders.payment_method ,orders.payment_status FROM orders JOIN hospitals ON orders.hospital_id = hospitals.id JOIN employees ON orders.employee_id = employees.id JOIN recievers ON orders.reciever_id = recievers.id";
         return $this->pdo->query($sql1)->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getOrderItems($orderId){
-        $stmt = $this->pdo->prepare("SELECT * FROM ordersitems WHERE order_id = ?");
+    public function getOrderItems($orderId)
+    {
+        $stmt = $this->pdo->prepare("SELECT items.id AS  item_id, items.name AS item_name, orderItems.quantity, items.unit_price FROM orderItems JOIN items ON orderItems.item_id = items.id WHERE orderItems.order_id = ?");
         $stmt->execute([$orderId]);
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
     }
+
+    public function getOrder($id)
+    {
+        $stmt = $this->pdo->prepare("SELECT orders.id, hospitals.name AS hospital_name, employees.name AS employee_name, recievers.name AS reciever_name, hospitals.id AS hospital_id, employees.id AS employee_id, recievers.id AS reciever_id, orders.order_date ,orders.order_status ,orders.total_amount ,orders.payment_method ,orders.payment_status FROM orders JOIN hospitals ON orders.hospital_id = hospitals.id JOIN employees ON orders.employee_id = employees.id JOIN recievers ON orders.reciever_id = recievers.id WHERE orders.id = ?");
+        $stmt->execute([$id]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    function getSelectedItems($order_id)
+    {
+        $sql = "SELECT item_id FROM orderItems WHERE order_id = ?";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$order_id]);
+
+        $selectedItems = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $selectedItems[] = $row['item_id'];
+        }
+        return $selectedItems;
+    }
+
+    function getSelectedItemsQty($order_id)
+    {
+        $sql = "SELECT item_id, quantity FROM orderItems WHERE order_id = ?";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$order_id]);
+
+        $selectedItemsQty = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $selectedItemsQty[$row['item_id']] = $row['quantity'];
+        }
+        return $selectedItemsQty;
+    }
+
 }

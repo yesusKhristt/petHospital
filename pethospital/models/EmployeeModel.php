@@ -19,7 +19,7 @@ class EmployeeModel
         );
         ";
 
-                try {
+        try {
             $this->pdo->exec($sql1);
 
         } catch (PDOException $e) {
@@ -31,5 +31,13 @@ class EmployeeModel
     {
         $sql1 = "SELECT * FROM employees";
         return $this->pdo->query($sql1)->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getEmployee($id)
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM employees WHERE id = ?");
+        $stmt->execute([$id]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 }

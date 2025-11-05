@@ -51,36 +51,222 @@ class MainController
         }
     }
 
-    public function hospitals($parts){
+    public function hospitals($parts)
+    {
+        switch ($parts[2]) {
+            case 'view':
+                $this->viewHospitals($parts);
+                break;
+            case 'edit':
+                $this->editHospitals($parts);
+                break;
+            case 'insert':
+                $this->insertHospitals($parts);
+                break;
+        }
+    }
+
+    public function viewHospitals($parts)
+    {
         $allHospitals = $this->hospital->getAllHospitals();
-        require_once __DIR__ . '/../views/hospital.php';
+        require_once __DIR__ . '/../views/hospital/hospitalView.php';
     }
 
-    public function employees($parts){
+    public function editHospitals($parts)
+    {
+        $id = $parts[3] ?? '';
+        $currHospital = $this->hospital->getHospital($id);
+        require_once __DIR__ . '/../views/hospital/hospitalEdit.php';
+    }
+
+    public function insertHospitals($parts)
+    {
+        require_once __DIR__ . '/../views/hospital/hospitalInsert.php';
+    }
+
+    public function employees($parts)
+    {
+        switch ($parts[2]) {
+            case 'view':
+                $this->viewEmployee($parts);
+                break;
+            case 'edit':
+                $this->editEmployee($parts);
+                break;
+            case 'insert':
+                $this->insertEmployee($parts);
+                break;
+        }
+    }
+
+    public function viewEmployee($parts)
+    {
         $allEmployees = $this->employee->getAllEmployees();
-        require_once __DIR__ . '/../views/employee.php';
+        require_once __DIR__ . '/../views/employee/employeeView.php';
     }
 
-    public function items($parts){
+    public function editEmployee($parts)
+    {
+        $id = $parts[3] ?? '';
+        $currEmployee = $this->employee->getEmployee($id);
+        require_once __DIR__ . '/../views/employee/employeeEdit.php';
+    }
+
+    public function insertEmployee($parts)
+    {
+        require_once __DIR__ . '/../views/employee/employeeInsert.php';
+    }
+
+    public function items($parts)
+    {
+        switch ($parts[2]) {
+            case 'view':
+                $this->viewItems($parts);
+                break;
+            case 'edit':
+                $this->editItems($parts);
+                break;
+            case 'insert':
+                $this->insertItems($parts);
+                break;
+        }
+    }
+
+    public function viewItems($parts)
+    {
         $allItems = $this->item->getAllItems();
         $allCategories = $this->category->getAllCategories();
-        require_once __DIR__ . '/../views/item.php';
+        require_once __DIR__ . '/../views/item/itemView.php';
     }
 
-    public function recievers($parts){
+    public function editItems($parts)
+    {
+        $id = $parts[3] ?? '';
+        $currItem = $this->item->getItem($id);
+        $allCategories = $this->category->getAllCategories();
+        require_once __DIR__ . '/../views/item/itemEdit.php';
+    }
+
+    public function insertItems($parts)
+    {
+        $allCategories = $this->category->getAllCategories();
+        require_once __DIR__ . '/../views/item/itemInsert.php';
+    }
+
+
+
+    public function recievers($parts)
+    {
+        switch ($parts[2]) {
+            case 'view':
+                $this->viewRecievers($parts);
+                break;
+            case 'edit':
+                $this->editRecievers($parts);
+                break;
+            case 'insert':
+                $this->insertRecievers($parts);
+                break;
+        }
+    }
+
+    public function viewRecievers($parts)
+    {
         $allRecievers = $this->reciever->getAllRecievers();
-        require_once __DIR__ . '/../views/reciever.php';
+        $allHospitals = $this->hospital->getAllHospitals();
+        require_once __DIR__ . '/../views/reciever/recieverView.php';
     }
 
-    public function orders($parts){
+    public function editRecievers($parts)
+    {
+        $id = $parts[3] ?? '';
+        $currReciever = $this->reciever->getReciever($id);
+        $allHospitals = $this->hospital->getAllHospitals();
+        require_once __DIR__ . '/../views/reciever/recieverEdit.php';
+    }
+
+    public function insertRecievers($parts)
+    {
+        $allHospitals = $this->hospital->getAllHospitals();
+        require_once __DIR__ . '/../views/reciever/recieverInsert.php';
+    }
+
+    public function orders($parts)
+    {
+        switch ($parts[2]) {
+            case 'view':
+                $this->viewOrders($parts);
+                break;
+            case 'edit':
+                $this->editOrders($parts);
+                break;
+            case 'insert':
+                $this->insertOrders($parts);
+                break;
+        }
+    }
+
+    public function viewOrders($parts)
+    {
         $allOrders = $this->order->getAllOrders();
-        require_once __DIR__ . '/../views/order.php';
+        require_once __DIR__ . '/../views/order/orderView.php';
     }
 
-    public function orderItems($parts){
+    public function editOrders($parts)
+    {
+        $id = $parts[3] ?? '';
+        $currOrder = $this->order->getOrder($id);
+        $selectedItems = $this->order->getSelectedItems($id);
+        $selectedItemsQty = $this->order->getSelectedItemsQty($id);
+
+        $allRecievers = $this->reciever->getAllRecievers();
+        $allHospitals = $this->hospital->getAllHospitals();
+        $allEmployees = $this->employee->getAllEmployees();
+        $allItems = $this->item->getAllItems();
+        require_once __DIR__ . '/../views/order/orderEdit.php';
+    }
+
+    public function insertOrders($parts)
+    {
+        $allRecievers = $this->reciever->getAllRecievers();
+        $allHospitals = $this->hospital->getAllHospitals();
+        $allEmployees = $this->employee->getAllEmployees();
+        $allItems = $this->item->getAllItems();
+        require_once __DIR__ . '/../views/order/orderInsert.php';
+    }
+
+    public function orderItems($parts)
+    {
+        switch ($parts[2]) {
+            case 'view':
+                $this->viewOrderItems($parts);
+                break;
+            case 'edit':
+                $this->editOrderItems($parts);
+                break;
+            case 'insert':
+                $this->insertOrderItems($parts);
+                break;
+        }
+    }
+
+    public function viewOrderItems($parts)
+    {
+        $orderId = $parts[3] ?? '';
+        $orderItems = $this->order->getOrderItems($orderId);
+        require_once __DIR__ . '/../views/orderItem/orderItemView.php';
+    }
+
+    public function editOrderItems($parts)
+    {
         $orderId = $parts[2];
-        $allOrders = $this->order->getOrderItems($orderId);
-        require_once __DIR__ . '/../views/orderItems.php';
+        $orderItems = $this->order->getOrderItems($orderId);
+        require_once __DIR__ . '/../views/orderItem/orderItemEdit.php';
+    }
+
+    public function insertOrderItems($parts)
+    {
+        require_once __DIR__ . '/../views/orderItem/orderItemInsert.php';
     }
 
     public function employeeForm($user_id)

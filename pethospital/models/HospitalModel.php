@@ -34,4 +34,11 @@ class HospitalModel
         return $this->pdo->query($sql1)->fetchAll(PDO::FETCH_ASSOC);
 
     }
+
+    public function getHospital($id){
+        $stmt = $this->pdo->prepare("SELECT * FROM hospitals WHERE id = ?");
+        $stmt->execute([$id]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }

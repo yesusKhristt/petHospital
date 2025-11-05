@@ -1,22 +1,47 @@
 <html>
-    <head>
-        <title>Home</title>
-    </head>
-    <body>
-        <a class="btn1" href="?controller=main&action=main/hospitals">
-            Hospitals
-        </a>
-        <a class="btn1" href="?controller=main&action=main/employees">
-            Employees
-        </a>
-        <a class="btn1" href="?controller=main&action=main/items">
-            Items
-        </a>
-        <a class="btn1" href="?controller=main&action=main/recievers">
-            Recievers
-        </a>
-        <a class="btn1" href="?controller=main&action=main/orders">
-            Orders
-        </a>
-    </body>
+
+<head>
+    <title>Home</title>
+</head>
+
+<body>
+    <div class="title">
+        <h3>View</h3>
+    </div>
+    <a class="btn1" href="?controller=main&action=main/hospitals/view">
+        Hospitals
+    </a>
+    <a class="btn1" href="?controller=main&action=main/employees/view">
+        Employees
+    </a>
+    <a class="btn1" href="?controller=main&action=main/items/view">
+        Items
+    </a>
+    <a class="btn1" href="?controller=main&action=main/recievers/view">
+        Recievers
+    </a>
+    <a class="btn1" href="?controller=main&action=main/orders/view">
+        Orders
+    </a>
+
+    <div class="title">
+        <h3>Insert</h3>
+    </div>
+    <a class="btn1" href="?controller=main&action=main/hospitals/insert">
+        Hospitals
+    </a>
+    <a class="btn1" href="?controller=main&action=main/employees/insert">
+        Employees
+    </a>
+    <a class="btn1" href="?controller=main&action=main/items/insert">
+        Items
+    </a>
+    <a class="btn1" href="?controller=main&action=main/recievers/insert">
+        Recievers
+    </a>
+    <a class="btn1" href="?controller=main&action=main/orders/insert">
+        Orders
+    </a>
+</body>
+
 </html>
