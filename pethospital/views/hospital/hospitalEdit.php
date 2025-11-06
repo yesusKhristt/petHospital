@@ -7,7 +7,7 @@
     <div class="title">
         <h3>Edit Hospital</h3>
     </div>
-    <form action="?controller=main&action=main/hospitals/edit" method="post">
+    <form action="?controller=main&action=main/hospitals/edit/<?=htmlspecialchars($parts[3])?>" method="post">
         <table>
                 <tr>
                     <td>Name</td>

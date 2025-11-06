@@ -41,4 +41,14 @@ class HospitalModel
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function addHosital($name, $address, $contact){
+        $stmt = $this->pdo->prepare("INSERT INTO `hospitals`(`name`, `address`, `contact_info`) VALUES (?, ?, ?)");
+        $stmt->execute([$name, $address, $contact]);
+    }
+
+    public function editHosital($name, $address, $contact, $id){
+        $stmt = $this->pdo->prepare("UPDATE `hospitals` SET `name`=?,`address`=?,`contact_info`= ? WHERE id = ?");
+        $stmt->execute([$name, $address, $contact, $id]);
+    }
 }

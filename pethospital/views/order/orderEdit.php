@@ -8,7 +8,7 @@
     <div class="title">
         <h3>Edit Order</h3>
     </div>
-    <form action="?controller=main&action=main/orders/edit" method="post">
+    <form action="?controller=main&action=main/orders/edit/<?=htmlspecialchars($parts[3])?>" method="post">
         <table>
             <tr>
                 <td>Hospital</td>
@@ -63,6 +63,15 @@
             <?php endforeach; ?>
 
             <tr>
+                <td>Order Status</td>
+                <td>
+                    <select name="orderStatus">
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
                 <td>Payment Method</td>
                 <td>
                     <select name="paymentMethod">
@@ -75,7 +84,7 @@
             <tr>
                 <td>Payment Status</td>
                 <td>
-                    <select name="paymentMethod">
+                    <select name="paymentStatus">
                         <option value="on placement">On Placement</option>
                         <option value="on delivery">On Delivery</option>
                     </select>

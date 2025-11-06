@@ -13,7 +13,7 @@
             <tr>
                 <td>Name</td>
                 <td>
-                    <input type="text" name="name" placeholder="Employee Name">
+                    <input type="text" name="name" placeholder="Hospital Name">
                 </td>
             </tr>
             <tr>
@@ -26,7 +26,7 @@
                 <td>Contact Info</td>
                 <td>
                     +94
-                    <input type="text" name="contact" placeholder="Employee Contact">
+                    <input type="text" name="contact" placeholder="Hospital Contact">
                 </td>
             </tr>
             <tr>

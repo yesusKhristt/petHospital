@@ -31,4 +31,24 @@ class CategoryModel
         $sql1 = "SELECT * FROM categories";
         return $this->pdo->query($sql1)->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function getCategory($id)
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM categories WHERE id = ?");
+        $stmt->execute([$id]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function addCategory($name)
+    {
+        $stmt = $this->pdo->prepare("INSERT INTO `categories`(`name`) VALUES (?)");
+        $stmt->execute([$name]);
+    }
+
+    public function editCategory($name, $id)
+    {
+        $stmt = $this->pdo->prepare("UPDATE `categories` SET `name`=? WHERE `id` = ?");
+        $stmt->execute([$name, $id]);
+    }
 }

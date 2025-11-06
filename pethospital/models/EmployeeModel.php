@@ -40,4 +40,14 @@ class EmployeeModel
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+        public function addEmployee($name, $contact){
+        $stmt = $this->pdo->prepare("INSERT INTO `employees`(`name`, `contact_info`) VALUES (?, ?)");
+        $stmt->execute([$name, $contact]);
+    }
+
+    public function editEmployee($name, $contact, $id){
+        $stmt = $this->pdo->prepare("UPDATE `employees` SET `name`=?,`contact_info`=? WHERE `id` = ?");
+        $stmt->execute([$name, $contact, $id]);
+    }
 }

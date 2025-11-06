@@ -41,4 +41,14 @@ class RecieverModel
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+        public function addReciever($name, $hospital, $contact){
+        $stmt = $this->pdo->prepare("INSERT INTO `recievers`(`name`, `hospital_id`, `contact_info`) VALUES (?, ?, ?)");
+        $stmt->execute([$name, $hospital, $contact]);
+    }
+
+    public function editReciever($name, $hospital, $contact, $id){
+        $stmt = $this->pdo->prepare("UPDATE `recievers` SET `name`=?, `hospital_id`=?,`contact_info`=? WHERE id =?");
+        $stmt->execute([$name, $hospital, $contact, $id]);
+    }
 }

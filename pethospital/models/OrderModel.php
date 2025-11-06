@@ -85,7 +85,7 @@ class OrderModel
         return $selectedItems;
     }
 
-    function getSelectedItemsQty($order_id)
+    public function getSelectedItemsQty($order_id)
     {
         $sql = "SELECT item_id, quantity FROM orderItems WHERE order_id = ?";
         $stmt = $this->pdo->prepare($sql);
@@ -97,5 +97,45 @@ class OrderModel
         }
         return $selectedItemsQty;
     }
+
+    public function editOrder($hospital, $employee, $reciever, $order_status, $payment_method, $payment_status, $items, $id)
+    {
+        
+        $total = 0;
+        $stmtItem = $this->pdo->prepare("INSERT INTO orderItems (order_id, item_id, quantity) VALUES (?, ?, ?)");
+        $stmt1 = $this->pdo->prepare("SELECT unit_price FROM items WHERE id = ?");
+        $stmt3 = $this->pdo->prepare("DELETE FROM orderItems WHERE order_id = ?");
+        $stmt3->execute([$id]);
+        foreach ($items as $item) {
+            if (isset($item['id'])) {
+                $stmtItem->execute([$id, $item['id'], $item['qty']]);
+                $stmt1->execute([$item['id']]);
+                $total += ($stmt1->fetchColumn() * $item['qty']);
+            }
+        }
+
+        $stmt2 = $this->pdo->prepare("UPDATE `orders` SET hospital_id = ?, reciever_id = ?, employee_id = ?, order_date = CURRENT_TIMESTAMP, order_status = ?, total_amount = ?, payment_method = ?, payment_status = ? WHERE id = ?");
+        $stmt2->execute([$hospital, $reciever, $employee, $order_status, $total, $payment_method, $payment_status , $id]);
+    }
+
+    public function addOrder($hospital, $employee, $reciever, $order_status, $payment_method, $payment_status, $items)
+    {
+        $stmt2 = $this->pdo->prepare("INSERT INTO orders (hospital_id, reciever_id, employee_id, order_date, order_status, total_amount, payment_method, payment_status) VALUES (?, ?, ?, CURRENT_TIMESTAMP, ?, 0, ?, ?)");
+        $stmt2->execute([$hospital, $reciever, $employee, $order_status, $payment_method, $payment_status ]);
+        $id = $this->pdo->lastInsertId();
+        $total = 0;
+        $stmtItem = $this->pdo->prepare("INSERT INTO orderItems (order_id, item_id, quantity) VALUES (?, ?, ?)");
+        $stmt1 = $this->pdo->prepare("SELECT unit_price FROM items WHERE id = ?");
+        foreach ($items as $item) {
+            if (isset($item['id'])) {
+                $stmtItem->execute([$id, $item['id'], $item['qty']]);
+                $stmt1->execute([$item['id']]);
+                $total += ($stmt1->fetchColumn() * $item['qty']);
+            }
+        }
+        $stmt3 = $this->pdo->prepare("UPDATE `orders` SET total_amount = ? WHERE id = ?");
+        $stmt3->execute([$total, $id]);
+    }
+    
 
 }

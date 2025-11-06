@@ -48,6 +48,9 @@ class MainController
             case 'orderItems':
                 $this->orderItems($parts);
                 break;
+            case 'categories':
+                $this->categories($parts);
+                break;
         }
     }
 
@@ -75,12 +78,30 @@ class MainController
     public function editHospitals($parts)
     {
         $id = $parts[3] ?? '';
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $name = $_POST['name'];
+            $address = $_POST['address'];
+            $contact = $_POST['contact'];
+
+            $this->hospital->editHosital($name, $address, $contact, $id);
+            header("Location: index.php?controller=main&action=main/hospitals/view");
+            exit;
+        }
         $currHospital = $this->hospital->getHospital($id);
         require_once __DIR__ . '/../views/hospital/hospitalEdit.php';
     }
 
     public function insertHospitals($parts)
     {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $name = $_POST['name'];
+            $address = $_POST['address'];
+            $contact = $_POST['contact'];
+
+            $this->hospital->addHosital($name, $address, $contact);
+            header("Location: index.php?controller=main&action=main/hospitals/view");
+            exit;
+        }
         require_once __DIR__ . '/../views/hospital/hospitalInsert.php';
     }
 
@@ -108,12 +129,28 @@ class MainController
     public function editEmployee($parts)
     {
         $id = $parts[3] ?? '';
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $name = $_POST['name'];
+            $contact = $_POST['contact'];
+
+            $this->employee->editEmployee($name, $contact, $id);
+            header("Location: index.php?controller=main&action=main/employees/view");
+            exit;
+        }
         $currEmployee = $this->employee->getEmployee($id);
         require_once __DIR__ . '/../views/employee/employeeEdit.php';
     }
 
     public function insertEmployee($parts)
     {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $name = $_POST['name'];
+            $contact = $_POST['contact'];
+
+            $this->employee->addEmployee($name, $contact);
+            header("Location: index.php?controller=main&action=main/employees/view");
+            exit;
+        }
         require_once __DIR__ . '/../views/employee/employeeInsert.php';
     }
 
@@ -142,6 +179,15 @@ class MainController
     public function editItems($parts)
     {
         $id = $parts[3] ?? '';
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $name = $_POST['name'];
+            $category = $_POST['category'];
+            $unitPrice = $_POST['price'];
+
+            $this->item->editItem($name, $category, $unitPrice, $id);
+            header("Location: index.php?controller=main&action=main/items/view");
+            exit;
+        }
         $currItem = $this->item->getItem($id);
         $allCategories = $this->category->getAllCategories();
         require_once __DIR__ . '/../views/item/itemEdit.php';
@@ -149,6 +195,15 @@ class MainController
 
     public function insertItems($parts)
     {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $name = $_POST['name'];
+            $category = $_POST['category'];
+            $unitPrice = $_POST['price'];
+
+            $this->item->addItem($name, $category, $unitPrice);
+            header("Location: index.php?controller=main&action=main/items/view");
+            exit;
+        }
         $allCategories = $this->category->getAllCategories();
         require_once __DIR__ . '/../views/item/itemInsert.php';
     }
@@ -180,6 +235,15 @@ class MainController
     public function editRecievers($parts)
     {
         $id = $parts[3] ?? '';
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $name = $_POST['name'];
+            $hospital = $_POST['hospital'];
+            $contact = $_POST['contact'];
+
+            $this->reciever->editReciever($name, $hospital, $contact, $id);
+            header("Location: index.php?controller=main&action=main/recievers/view");
+            exit;
+        }
         $currReciever = $this->reciever->getReciever($id);
         $allHospitals = $this->hospital->getAllHospitals();
         require_once __DIR__ . '/../views/reciever/recieverEdit.php';
@@ -187,6 +251,15 @@ class MainController
 
     public function insertRecievers($parts)
     {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $name = $_POST['name'];
+            $hospital = $_POST['hospital'];
+            $contact = $_POST['contact'];
+
+            $this->reciever->addReciever($name, $hospital, $contact);
+            header("Location: index.php?controller=main&action=main/recievers/view");
+            exit;
+        }
         $allHospitals = $this->hospital->getAllHospitals();
         require_once __DIR__ . '/../views/reciever/recieverInsert.php';
     }
@@ -215,6 +288,19 @@ class MainController
     public function editOrders($parts)
     {
         $id = $parts[3] ?? '';
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $hospital = $_POST['hospital'];
+            $employee = $_POST['employee'];
+            $reciever = $_POST['reciever'];
+            $order_method = $_POST['orderStatus'];
+            $payment_method = $_POST['paymentMethod'];
+            $payment_status = $_POST['paymentStatus'];
+            $items = $_POST['items']; // array of selected items
+
+            $this->order->editOrder($hospital, $employee, $reciever, $order_method, $payment_method, $payment_status, $items, $id);
+            header("Location: index.php?controller=main&action=main/orders/view");
+            exit;
+        }
         $currOrder = $this->order->getOrder($id);
         $selectedItems = $this->order->getSelectedItems($id);
         $selectedItemsQty = $this->order->getSelectedItemsQty($id);
@@ -228,6 +314,19 @@ class MainController
 
     public function insertOrders($parts)
     {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $hospital = $_POST['hospital'];
+            $employee = $_POST['employee'];
+            $reciever = $_POST['reciever'];
+            $order_method = $_POST['orderStatus'];
+            $payment_method = $_POST['paymentMethod'];
+            $payment_status = $_POST['paymentStatus'];
+            $items = $_POST['items']; // array of selected items
+
+            $this->order->addOrder($hospital, $employee, $reciever, $order_method, $payment_method, $payment_status, $items);
+            header("Location: index.php?controller=main&action=main/orders/view");
+            exit;
+        }
         $allRecievers = $this->reciever->getAllRecievers();
         $allHospitals = $this->hospital->getAllHospitals();
         $allEmployees = $this->employee->getAllEmployees();
@@ -257,17 +356,82 @@ class MainController
         require_once __DIR__ . '/../views/orderItem/orderItemView.php';
     }
 
-    public function editOrderItems($parts)
+    // public function editOrderItems($parts)
+    // {
+    //     $orderId = $parts[2];
+    //     $orderItems = $this->order->getOrderItems($orderId);
+    //     require_once __DIR__ . '/../views/orderItem/orderItemEdit.php';
+    // }
+
+    // public function insertOrderItems($parts)
+    // {
+    //     require_once __DIR__ . '/../views/orderItem/orderItemInsert.php';
+    // }
+
+        public function categories($parts)
     {
-        $orderId = $parts[2];
-        $orderItems = $this->order->getOrderItems($orderId);
-        require_once __DIR__ . '/../views/orderItem/orderItemEdit.php';
+        switch ($parts[2]) {
+            case 'view':
+                $this->viewCategory($parts);
+                break;
+            case 'edit':
+                $this->editCategory($parts);
+                break;
+            case 'insert':
+                $this->insertCategory($parts);
+                break;
+        }
     }
 
-    public function insertOrderItems($parts)
+    public function viewCategory($parts)
     {
-        require_once __DIR__ . '/../views/orderItem/orderItemInsert.php';
+        $allCategories = $this->category->getAllCategories();
+        require_once __DIR__ . '/../views/category/categoryView.php';
     }
+
+    public function editCategory($parts)
+    {
+        $id = $parts[3] ?? '';
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $name = $_POST['name'];
+
+            $this->category->editCategory($name, $id);
+            header("Location: index.php?controller=main&action=main/categories/view");
+            exit;
+        }
+        $currCategory = $this->category->getCategory($id);
+        require_once __DIR__ . '/../views/category/categoryEdit.php';
+    }
+
+    public function insertCategory($parts)
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $name = $_POST['name'];
+
+            $this->category->addCategory($name);
+            header("Location: index.php?controller=main&action=main/categories/view");
+            exit;
+        }
+        require_once __DIR__ . '/../views/category/categoryInsert.php';
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public function employeeForm($user_id)
     {

@@ -42,4 +42,14 @@ class ItemModel
         return $stmt->fetch(PDO::FETCH_ASSOC);
         
     }
+
+    public function addItem($name, $category, $unitPrice){
+        $stmt = $this->pdo->prepare("INSERT INTO `items`(`name`, `category`, `unit_price`) VALUES (?, ?, ?)");
+        $stmt->execute([$name, $category, $unitPrice]);
+    }
+
+    public function editItem($name, $category, $unitPrice, $id){
+        $stmt = $this->pdo->prepare("UPDATE `items` SET `name`=?,`category`=?,`unit_price`=? WHERE id=?");
+        $stmt->execute([$name, $category, $unitPrice, $id]);
+    }
 }

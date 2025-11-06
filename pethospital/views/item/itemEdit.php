@@ -8,7 +8,7 @@
     <div class="title">
         <h3>Edit Item</h3>
     </div>
-    <form action="?controller=main&action=main/items/edit" method="post">
+    <form action="?controller=main&action=main/items/edit/<?=htmlspecialchars($parts[3])?>" method="post">
         <table>
             <tr>
                 <td>Name</td>
