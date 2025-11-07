@@ -7,6 +7,7 @@ class MainController
     private $item;
     private $reciever;
     private $order;
+    private $stock;
 
     public function __construct($pdo)
     {
@@ -16,12 +17,14 @@ class MainController
         require_once __DIR__ . '/../models/ItemModel.php';
         require_once __DIR__ . '/../models/RecieverModel.php';
         require_once __DIR__ . '/../models/OrderModel.php';
+        require_once __DIR__ . '/../models/StockModel.php';
         $this->hospital = new HospitalModel($pdo);
         $this->employee = new EmployeeModel($pdo);
         $this->category = new CategoryModel($pdo);
         $this->item = new ItemModel($pdo);
         $this->reciever = new RecieverModel($pdo);
         $this->order = new OrderModel($pdo);
+        $this->stock = new StockModel($pdo);
     }
 
     public function main($parts)
@@ -50,6 +53,9 @@ class MainController
                 break;
             case 'categories':
                 $this->categories($parts);
+                break;
+            case 'stock':
+                $this->stock($parts);
                 break;
         }
     }
@@ -182,9 +188,11 @@ class MainController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $name = $_POST['name'];
             $category = $_POST['category'];
+            $totalStock = $_POST['totalStock'];
+            $reservedStock = $_POST['reservedStock'];
             $unitPrice = $_POST['price'];
 
-            $this->item->editItem($name, $category, $unitPrice, $id);
+            $this->item->editItem($name, $category, $unitPrice, $totalStock, $reservedStock, $id);
             header("Location: index.php?controller=main&action=main/items/view");
             exit;
         }
@@ -198,9 +206,11 @@ class MainController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $name = $_POST['name'];
             $category = $_POST['category'];
+            $totalStock = $_POST['totalStock'];
+            $reservedStock = $_POST['reservedStock'];
             $unitPrice = $_POST['price'];
 
-            $this->item->addItem($name, $category, $unitPrice);
+            $this->item->addItem($name, $category, $unitPrice, $totalStock);
             header("Location: index.php?controller=main&action=main/items/view");
             exit;
         }
@@ -368,7 +378,7 @@ class MainController
     //     require_once __DIR__ . '/../views/orderItem/orderItemInsert.php';
     // }
 
-        public function categories($parts)
+    public function categories($parts)
     {
         switch ($parts[2]) {
             case 'view':
@@ -413,6 +423,60 @@ class MainController
             exit;
         }
         require_once __DIR__ . '/../views/category/categoryInsert.php';
+    }
+
+    public function stock($parts)
+    {
+        switch ($parts[2]) {
+            case 'view':
+                $this->viewStock($parts);
+                break;
+            case 'edit':
+                $this->editStock($parts);
+                break;
+            case 'insert':
+                $this->insertStock($parts);
+                break;
+        }
+    }
+
+    public function viewStock($parts)
+    {
+        $allStock = $this->stock->getAllStock();
+        require_once __DIR__ . '/../views/stock/stockView.php';
+    }
+
+    public function editStock($parts)
+    {
+        $hospital_id = $parts[3] ?? '';
+        $item_id = $parts[4] ?? '';
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $quantity = $_POST['quantity'];
+
+            $this->stock->editStock($hospital_id, $item_id, $quantity);
+            header("Location: index.php?controller=main&action=main/stock/view");
+            exit;
+        }
+        $currStock = $this->stock->getStock($hospital_id, $item_id);
+        $allHospitals = $this->hospital->getAllHospitals();
+        $allItems = $this->item->getAllItems();
+        require_once __DIR__ . '/../views/stock/stockEdit.php';
+    }
+
+    public function insertStock($parts)
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $hospital_id = $_POST['hospital'];
+            $item_id = $_POST['item'];
+            $quantity = $_POST['quantity'];
+
+            $this->stock->addStock($hospital_id, $item_id, $quantity);
+            header("Location: index.php?controller=main&action=main/stock/view");
+            exit;
+        }
+        $allHospitals = $this->hospital->getAllHospitals();
+        $allItems = $this->item->getAllItems();
+        require_once __DIR__ . '/../views/stock/stockInsert.php';
     }
 
 

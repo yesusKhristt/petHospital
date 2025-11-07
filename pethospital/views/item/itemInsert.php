@@ -28,6 +28,12 @@
                 </td>
             </tr>
             <tr>
+                <td>Total Stock</td>
+                <td>
+                    <input type="number" name="totalStock">
+                </td>
+            </tr>
+            <tr>
                 <td>Unit Price</td>
                 <td>
                     Rs.

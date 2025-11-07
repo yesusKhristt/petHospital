@@ -8,7 +8,7 @@
     <div class="title">
         <h3>Edit Item</h3>
     </div>
-    <form action="?controller=main&action=main/items/edit/<?=htmlspecialchars($parts[3])?>" method="post">
+    <form action="?controller=main&action=main/items/edit/<?= htmlspecialchars($parts[3]) ?>" method="post">
         <table>
             <tr>
                 <td>Name</td>
@@ -28,6 +28,18 @@
                         <?php endforeach ?>
                     </select>
 
+                </td>
+            </tr>
+            <tr>
+                <td>Total Stock</td>
+                <td>
+                    <input type="number" name="totalStock" value="<?= htmlspecialchars($currItem['total_stock']) ?>">
+                </td>
+            </tr>
+            <tr>
+                <td>Reserved Stock</td>
+                <td>
+                    <input type="number" name="reservedStock" value="<?= htmlspecialchars($currItem['reserved_stock']) ?>">
                 </td>
             </tr>
             <tr>

@@ -8,19 +8,44 @@
     <div class="title">
         <h3>Add Employee</h3>
     </div>
-    <form action="?controller=main&action=main/employees/edit/<?=htmlspecialchars($parts[3])?>" method="post">
+    <form action="?controller=main&action=main/employees/edit/<?= htmlspecialchars($parts[3]) ?>" method="post">
         <table>
             <tr>
                 <td>Name</td>
                 <td>
-                    <input type="text" name="name" placeholder="Employee Name" value="<?=htmlspecialchars($currEmployee['name'])?>">
+                    <input type="text" name="name" placeholder="Employee Name"
+                        value="<?= htmlspecialchars($currEmployee['name']) ?>">
                 </td>
             </tr>
             <tr>
                 <td>Contact Info</td>
                 <td>
                     +94
-                    <input type="text" name="contact" placeholder="Employee Contact" value="<?=htmlspecialchars($currEmployee['contact_info'])?>">
+                    <input type="text" name="contact" placeholder="Employee Contact"
+                        value="<?= htmlspecialchars($currEmployee['contact_info']) ?>">
+                </td>
+            </tr>
+            <tr>
+                <td>Total Stock</td>
+                <td>
+                    <input type="number" name="<tr>
+                <td>Total Stock</td>
+                <td>
+                    <input type="number" name="totalStock" placeholder="Total Stock">
+                </td>
+            </tr>
+            <tr>
+                <td>Reserved Stock</td>
+                <td>
+                    <input type="number" name="reservedStock" placeholder="Reserved Stock">
+                </td>
+            </tr>" placeholder="Total Stock">
+                </td>
+            </tr>
+            <tr>
+                <td>Reserved Stock</td>
+                <td>
+                    <input type="number" name="reservedStock" placeholder="Reserved Stock">
                 </td>
             </tr>
             <tr>

@@ -20,7 +20,7 @@
             <tr>
                 <td>Hospital</td>
                 <td>
-                    <select name="hospital" value="<?= htmlspecialchars($reciever['hospital_name']) ?>">
+                    <select name="hospital">
                         <?php foreach ($allHospitals as $row): ?>
                             <option value="<?= htmlspecialchars($row['id']) ?>"
                                 <?= ($row['id'] == $currReciever['hospital_id']) ? 'selected' : '' ?>>

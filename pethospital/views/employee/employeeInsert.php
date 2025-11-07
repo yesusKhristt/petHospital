@@ -24,6 +24,18 @@
                 </td>
             </tr>
             <tr>
+                <td>Total Stock</td>
+                <td>
+                    <input type="number" name="totalStock" placeholder="Total Stock">
+                </td>
+            </tr>
+            <tr>
+                <td>Reserved Stock</td>
+                <td>
+                    <input type="number" name="reservedStock" placeholder="Reserved Stock">
+                </td>
+            </tr>
+            <tr>
                 <td colspan="2">
                     <input type="submit">
                 </td>

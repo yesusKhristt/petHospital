@@ -26,6 +26,9 @@
     <a class="btn1" href="?controller=main&action=main/categories/view">
         Categories
     </a>
+    <a class="btn1" href="?controller=main&action=main/stock/view">
+        Stock
+    </a>
 
     <div class="title">
         <h3>Insert</h3>
@@ -47,6 +50,9 @@
     </a>
     <a class="btn1" href="?controller=main&action=main/categories/insert">
         Categories
+    </a>
+    <a class="btn1" href="?controller=main&action=main/stock/insert">
+        Stock
     </a>
 </body>
 
