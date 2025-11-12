@@ -57,6 +57,9 @@ class MainController
             case 'stock':
                 $this->stock($parts);
                 break;
+            case 'charts':
+                $this->sales($parts);
+                break;
         }
     }
 
@@ -478,6 +481,29 @@ class MainController
         $allItems = $this->item->getAllItems();
         require_once __DIR__ . '/../views/stock/stockInsert.php';
     }
+
+    public function charts($parts)
+    {
+        switch ($parts[2]) {
+            case 'sales':
+                $this->sales($parts);
+                break;
+            case 'edit':
+                $this->editStock($parts);
+                break;
+            case 'insert':
+                $this->insertStock($parts);
+                break;
+        }
+    }
+
+    public function sales($parts)
+    {
+        $allStock = $this->stock->getAllStock();
+        require_once __DIR__ . '/../views/charts/sales.php';
+    }
+
+
 
 
 

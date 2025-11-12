@@ -54,6 +54,13 @@
     <a class="btn1" href="?controller=main&action=main/stock/insert">
         Stock
     </a>
+
+    <div class="title">
+        <h3>Charts</h3>
+    </div>
+    <a class="btn1" href="?controller=main&action=main/charts/sales">
+        Sales
+    </a>
 </body>
 
 </html>
